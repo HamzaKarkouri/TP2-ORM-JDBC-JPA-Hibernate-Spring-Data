@@ -8,8 +8,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
-import java.awt.print.Pageable;
 import java.util.Date;
 import java.util.List;
 
@@ -27,13 +27,14 @@ private PatientRepository patientRepository;
             patientRepository.save(
                     new Patient(null,"hassan",new Date(),true,(int)(Math.random()*100)));
         }
-      List<Patient> patients=patientRepository.findAll();
-//        System.out.println("Total pages:" +patients.getTotalPages());
-//        System.out.println("Total elements:" +patients.getTotalElements());
-//        System.out.println("Num page:" +patients.getNumber());
-//        List<Patient> content =patients.getContent();
-//        List<Patient> byMalade =patientRepository.findByMalade(true);
-//        List<Patient> patientList=patientRepository.chercherPatients("%h%",40);
+
+      Page<Patient> patients=patientRepository.findAll(PageRequest.of(1,5));
+        System.out.println("Total pages:" +patients.getTotalPages());
+        System.out.println("Total elements:" +patients.getTotalElements());
+        System.out.println("Num page:" +patients.getNumber());
+        List<Patient> content =patients.getContent();
+        List<Patient> byMalade =patientRepository.findByMalade(true);
+       List<Patient> patientList=patientRepository.chercherPatients("%h%",40);
         patients.forEach(p->{
        System.out.println("================================");
        System.out.println(p.getId());
